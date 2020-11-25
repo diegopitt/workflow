@@ -1,0 +1,15 @@
+{
+  "name": "Wind Fire",
+  "short_name": "Fire",
+  "icons": [
+    {
+        "src": "./wf.svg",
+        "sizes": "72x72 96x96 128x128 256x256"
+    }
+],
+  "theme_color": "#5850ec",
+  "background_color": "#5850ec",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

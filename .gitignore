@@ -1,0 +1,9 @@
+node_modules
+.next
+functions
+.now
+.vercel
+.env.local
+database-debug.log
+ui-debug.log
+package-lock.json
