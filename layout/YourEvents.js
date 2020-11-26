@@ -20,7 +20,7 @@ const YourEvents = (props) => {
   return (
     <div className="w-full">
       <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-xl leading-6 font-semibold text-gray-800 mt-1">
+        <h3 className="text-xl leading-6 font-bold text-gray-800 mt-1">
           Eventos en los que participas
         </h3>
         <p className="max-w-2xl text-sm leading-5 text-gray-400">

@@ -19,6 +19,12 @@ module.exports = {
       maxWidth: {
         '8xl': '1920px',
       },
+      width: {
+        '18': '4.5rem',
+      },
+      height: {
+        '18': '4.5rem',
+      },
       boxShadow: {
         'outline-2': '0 0 0 2px var(--accents-2)',
         magical:

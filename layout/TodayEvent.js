@@ -47,15 +47,15 @@ const TodayEvent = (props) => {
 
   return (
     event && <div className="flex">
-			<div className="flex block px-4 py-2 text-sm">
-				<div className="flex-shrink-0 h-14 w-14">
-					<img className="h-14 w-14 rounded-md w-full h-full object-cover" src={event.img} alt="" />
+			<div className="flex block px-4 py-2 sm:px-4 sm:py-2 md:px-6 md:py-2 text-sm">
+				<div className="flex-shrink-0 h-14 w-14 sm:h-14 sm:w-14 md:h-18 md:w-18">
+					<img className="h-14 w-14 sm:h-14 sm:w-14 md:h-18 md:w-18 rounded-md sm:rounded-md md:rounded-lg w-full h-full object-cover" src={event.img} alt="" />
 				</div>
-				<div className="ml-4">
+				<div className="ml-4 w-32">
 					<div className="text-sm leading-5 font-semibold text-gray-900">{event.title}</div>
 					<div className="text-xs leading-5 font-medium text-gray-900">{dayName()}</div>
 					{isNow && <div className={`text-green-500 font-semibold text-xs leading-5`}>Ahora</div>}
-					{!isNow && <div className={`${passed ? 'text-red-600 font-semibold' : 'text-gray-400'} text-xs leading-5`}>{!passed ? (timeLeft && timeLeft) : 'finalizado'}</div>}
+					{!isNow && <div className={`${passed ? 'text-red-600 font-semibold' : 'text-gray-400'} text-xs leading-5`}>{!passed ? (timeLeft && timeLeft) : 'Finalizado'}</div>}
 				</div>
 			</div>
 		</div>

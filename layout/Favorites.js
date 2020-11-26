@@ -19,12 +19,12 @@ const Favorites = (props) => {
   return (
     <div className="w-full">
       <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-xl leading-6 font-semibold text-gray-800 mt-1">
+        <h3 className="text-xl leading-6 font-bold text-gray-800 mt-1">
           Eventos favoritos
         </h3>
-        <p className="max-w-2xl text-sm leading-5 text-gray-400">
+        {/* <p className="max-w-2xl text-sm leading-5 text-gray-400">
           Tus eventos favoritos
-        </p>
+        </p> */}
       </div>
       <div className="flex flex-wrap min-h-screen">
       { allEvents && Object.keys(allEvents).map(x => <div key={x} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event isFav={true} now={now} uid={uid} eventKey={x} /></div>)}

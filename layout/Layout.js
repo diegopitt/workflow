@@ -17,13 +17,13 @@ const Layout = (props) => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-              <img onClick={() => router.push('/')} className="h-8 w-auto" src="/wf.svg" alt="Workflow logo"/>
+              <img onClick={() => router.pathname !== '/' && router.push('/')} className="cursor-pointer h-8 w-auto" src="/wf.svg" alt="Workflow logo"/>
               </div>
               <div className="block">
                 { props.uid &&
                   <div className="ml-3 flex items-baseline">
-                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-indigo-400' : 'text-gray-400'} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
-                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-indigo-400' : 'text-gray-400'} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
+                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-indigo-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
+                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-indigo-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
                   </div>
                 }
               </div>

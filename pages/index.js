@@ -18,13 +18,13 @@ const Index = (props) => {
       {(!props.uid) && <MainHero/>}
       {(props.uid && props.todayUserEvent) && <TodayEvents todayUserEvent={props.todayUserEvent} uid={props.uid} now={now} />}
         <div>
-          <div className="px-4 py-5 sm:px-6 pb-1">
-            <h3 className="text-xl leading-6 font-semibold text-gray-800 mt-1">
+          <div className="px-4 py-10 sm:px-6 pb-2">
+            <h3 className="text-xl leading-6 font-bold text-gray-800 mt-0 sm:mt-0 md:mt-1">
               Calendario de eventos
             </h3>
-            <p className="max-w-2xl text-sm leading-5 text-gray-600">
+            {/* <p className="max-w-2xl text-sm leading-5 text-gray-400">
               Seleciona un dia para ver eventos disponibles
-            </p>
+            </p> */}
           </div>
           <Events uid={props.uid} now={now} events={props.events} phoneNumber={props.phoneNumber} />
         </div>
