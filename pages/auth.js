@@ -31,7 +31,7 @@ const auth = () => {
               </label>
             </div>
             <div className="text-sm leading-5">
-              <p onClick={() => Router.push('/tus_eventos')} className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+              <p onClick={() => Router.push('/category/122')} className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                 Forgot your password?
               </p>
             </div>

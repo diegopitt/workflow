@@ -10,12 +10,13 @@ const Index = (props) => {
   const [showModal, setShowModal] = useState(false)
   const now = getDay(new Date(Date.now()))
   const Modal = dynamic(() => import('../layout/Modal'))
-  console.log('d',props.todayUserEvent)
   const Register = dynamic(() => import('../layout/Register'))
+  const CategoryEvents = dynamic(() => import('../layout/CategoryEvents'))
   const toggleModal = () => setShowModal(!showModal)
   return (
     <Layout {...props} toggleModal={toggleModal}>
       {(!props.uid) && <MainHero/>}
+      <CategoryEvents uid={props.uid} />
       {(props.uid && props.todayUserEvent) && <TodayEvents todayUserEvent={props.todayUserEvent} uid={props.uid} now={now} />}
         <div>
           <div className="px-4 py-10 sm:px-6 pb-2">
