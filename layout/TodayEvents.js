@@ -5,8 +5,8 @@ import dynamic from 'next/dynamic'
 const TodayEvent = dynamic(() => import('./TodayEvent'))
 
 const TodayEvents = (props) => {
-  const {uid, now} = props
-  const [allEvents, setEvents] = useState(now)
+  const {uid, now, todayUserEvent} = props
+  const [events, setEvents] = useState(todayUserEvent)
   
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUserByDay/${now}/${uid}`)
@@ -17,7 +17,7 @@ const TodayEvents = (props) => {
     return () => ref.off('value', listener)
   }, [uid])
   return (
-    allEvents && 
+    events && 
     <div className="w-full">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-xl leading-6 font-bold text-green-500 mt-1">
@@ -25,7 +25,7 @@ const TodayEvents = (props) => {
         </h3>
       </div>
       <div className="flex flex-wrap mt-2">
-      { allEvents && Object.keys(allEvents).map(x => 
+      { events && Object.keys(events).map(x => 
         <TodayEvent now={now} key={x} eventKey={x} />
       )}
       </div>

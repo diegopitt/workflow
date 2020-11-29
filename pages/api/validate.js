@@ -1,13 +1,14 @@
 import admin  from '../../lib/firebase-admin'
-import { getDay } from 'date-fns'
+import { getDay, startOfToday } from 'date-fns'
 const validate = async (uid) => {
-  const today = getDay(new Date(Date.now()))
+  const today = getDay(startOfToday())
+  const test = startOfToday()
   if(uid){
     const user = await admin.auth().getUser(uid)
     const snap = await admin.database().ref(`/eventsByUser/${uid}`).once('value');
     const ebubd = await admin.database().ref(`/eventsByUserByDay/${today}/${uid}`).once('value');
     const favs = await admin.database().ref(`/favotitesByUser/${uid}`).once('value');
-    const sntp = await admin.database().ref(`/active/${today}/`).once('value');
+    const sntp = await admin.database().ref(`/active/${today}`).once('value');
     const events = { ...sntp.val() }
     const eventsuser = { ...snap.val() }
     const favoritesbyuser = { ...favs.val() }
@@ -15,6 +16,8 @@ const validate = async (uid) => {
     const result = {
       data: {
         uid: uid,
+        today: today,
+        test:test,
         phoneNumber: user ? user.phoneNumber : null,
         emailVerified: user ? user.emailVerified : null,
         todayEvents: events,
@@ -31,6 +34,8 @@ const validate = async (uid) => {
     const result = {
       data: {
         todayEvents: events,
+        test:test,
+        today: today
       },
     };
     console.log('validate reutlt', result)

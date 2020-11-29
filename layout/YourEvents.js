@@ -7,7 +7,7 @@ const YourEvents = (props) => {
   const {uid, eventsbyuser, todayEvents} = props
   const [allEvents, setEvents] = useState(eventsbyuser)
   const Event = dynamic(() => import('./Event'))
-  const now = getDay(new Date(Date.now()))
+  const now = props.today
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUser/${uid}`)
     const listener = ref.on('value', snapshot => {
