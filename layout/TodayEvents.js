@@ -21,7 +21,7 @@ const TodayEvents = (props) => {
     <div className="w-full">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-xl leading-6 font-bold text-green-500 mt-1">
-          Eventos para hoy
+          Tus eventos hoy
         </h3>
       </div>
       <div className="flex flex-wrap mt-2">

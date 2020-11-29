@@ -17,7 +17,7 @@ const validate = async (uid) => {
         uid: uid,
         phoneNumber: user ? user.phoneNumber : null,
         emailVerified: user ? user.emailVerified : null,
-        events: events,
+        todayEvents: events,
         todayUserEvent: eventByUserByday,
         eventsbyuser: eventsuser,
         favoritesbyuser: favoritesbyuser
@@ -30,7 +30,7 @@ const validate = async (uid) => {
     const events = { ...snapshot.val() }
     const result = {
       data: {
-        events: events,
+        todayEvents: events,
       },
     };
     console.log('validate reutlt', result)

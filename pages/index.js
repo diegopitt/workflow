@@ -18,7 +18,7 @@ const Index = (props) => {
       {(!props.uid) && 
         <>
           <MainHero />
-          <CategoryEvents uid={null} />
+          <CategoryEvents uid={null} todayEvents={props.todayEvents} />
         </>
       }
       {(props.uid && props.todayUserEvent) && <TodayEvents todayUserEvent={props.todayUserEvent} uid={props.uid} now={now} />}
@@ -28,7 +28,7 @@ const Index = (props) => {
               Calendario de eventos
             </h3>
           </div>
-          <Events uid={props.uid} now={now} events={props.events} phoneNumber={props.phoneNumber} />
+          <Events uid={props.uid} now={now} todayEvents={props.todayEvents} phoneNumber={props.phoneNumber} />
         </div>
         <Modal showModal={showModal}>
           <Register toggleModal={toggleModal}/>

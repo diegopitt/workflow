@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 
 const Event = (props) => {
   const { saveFavorite, unFavorite, registerEvent, unRegisterEvent } = useUser()
-  const { eventKey, uid, phoneNumber, isFav, now, hideIsToday, showDays, isCategory } = props
+  const { eventKey, uid, phoneNumber, isFav, now, hideIsToday, showDays, isCategory, todayEvents } = props
   const [eventData, setEventData] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [hasRegistered, setHasRegistered] = useState(null)
@@ -65,7 +65,7 @@ const Event = (props) => {
         </div>}
       <img className="w-full rounded-md" src={eventData.img} alt={eventData.title} />
       <div className="px-2 py-4 bg-white">
-        <span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(isToday.hasOwnProperty(eventKey) && !hideIsToday) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}
+        <span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(todayEvents.hasOwnProperty(eventKey) && (!hideIsToday)) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}
         {showDays && <div className="font-medium text-xs mb-2 mt-2 text-gray-500">Lunes - Miercoles - Viernes</div>}
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">De {eventData.start} a {eventData.end}</div>
         <p className="text-gray-700 text-base">{eventData.desc}</p>
