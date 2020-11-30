@@ -1,12 +1,12 @@
 import { useState, useEffect  } from 'react'
 import {firebase} from '../lib/firebase-client'
 import dynamic from 'next/dynamic'
-import { getDay } from 'date-fns'
+
 const Favorites = (props) => {
-  const {uid, favoritesbyuser, todayEvents} = props
+  const {uid, favoritesbyuser, todayEvents, today} = props
   const [allEvents, setEvents] = useState(favoritesbyuser)
   const Event = dynamic(() => import('./Event'))
-  const now = props.today
+
   useEffect(() => {
     const ref = firebase.database().ref(`/favotitesByUser/${uid}`)
     const listener = ref.on('value', snapshot => {
@@ -27,7 +27,7 @@ const Favorites = (props) => {
         </p> */}
       </div>
       <div className="flex flex-wrap min-h-screen">
-      { allEvents && Object.keys(allEvents).map(x => <div key={x} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event todayEvents={todayEvents} isFav={true} now={now} uid={uid} eventKey={x} /></div>)}
+      { allEvents && Object.keys(allEvents).map(x => <div key={x} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event todayEvents={todayEvents} isFav={true} today={today} uid={uid} eventKey={x} /></div>)}
       { !allEvents && <div className="flex justify-center w-full mt-10 text-lg font-semibold text-gray-400">No tienes ningun evento favorito</div>}
       </div>
     </div>

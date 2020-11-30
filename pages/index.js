@@ -7,8 +7,8 @@ const TodayEvents = dynamic(() => import('../layout/TodayEvents'))
 
 const Index = (props) => {
   const [showModal, setShowModal] = useState(false)
-  const now = props.today
-  console.log(props.test)
+  const {today} = props
+  console.log('time', props.test)
   const Modal = dynamic(() => import('../layout/Modal'))
   const Register = dynamic(() => import('../layout/Register'))
   const CategoryEvents = dynamic(() => import('../layout/CategoryEvents'))
@@ -18,17 +18,17 @@ const Index = (props) => {
       {(!props.uid) && 
         <>
           <MainHero />
-          <CategoryEvents uid={null} todayEvents={props.todayEvents} />
+          <CategoryEvents today={today} uid={null} todayEvents={props.todayEvents} />
         </>
       }
-      {(props.uid && props.todayUserEvent) && <TodayEvents todayUserEvent={props.todayUserEvent} uid={props.uid} now={now} />}
+      {(props.uid && props.todayUserEvents) && <TodayEvents todayUserEvents={props.todayUserEvents} uid={props.uid} today={today} />}
         <div>
           <div className="px-4 py-10 sm:px-6 pb-2">
             <h3 className="text-xl leading-6 font-bold text-gray-800 mt-0 sm:mt-0 md:mt-1">
               Calendario de eventos
             </h3>
           </div>
-          <Events uid={props.uid} now={now} todayEvents={props.todayEvents} phoneNumber={props.phoneNumber} />
+          <Events uid={props.uid} today={today} todayEvents={props.todayEvents} phoneNumber={props.phoneNumber} />
         </div>
         <Modal showModal={showModal}>
           <Register toggleModal={toggleModal}/>

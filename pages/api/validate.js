@@ -1,8 +1,9 @@
 import admin  from '../../lib/firebase-admin'
-import { getDay, startOfToday } from 'date-fns'
+import moment from 'moment-timezone'
+
 const validate = async (uid) => {
-  const today = getDay(startOfToday())
-  const test = startOfToday()
+  const today = moment().tz("America/Mexico_City").day();
+  const test = moment().tz("America/Mexico_City").day();
   if(uid){
     const user = await admin.auth().getUser(uid)
     const snap = await admin.database().ref(`/eventsByUser/${uid}`).once('value');
@@ -21,7 +22,7 @@ const validate = async (uid) => {
         phoneNumber: user ? user.phoneNumber : null,
         emailVerified: user ? user.emailVerified : null,
         todayEvents: events,
-        todayUserEvent: eventByUserByday,
+        todayUserEvents: eventByUserByday,
         eventsbyuser: eventsuser,
         favoritesbyuser: favoritesbyuser
       },

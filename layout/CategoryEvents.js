@@ -1,11 +1,10 @@
 import { useState, useEffect  } from 'react'
 import {firebase} from '../lib/firebase-client'
 import dynamic from 'next/dynamic'
-import { getDay } from 'date-fns'
 
 const CategoryEvents = (props) => {
-  const {uid, CategoryId, phoneNumber} = props
-  const now = getDay(new Date(Date.now()))
+  console.log(props)
+  const {uid, CategoryId, phoneNumber , today} = props
   const [events, setEvents] = useState({})
   const [catID, setCatID] = useState(CategoryId)
   const [catTitle, setCatTitle] = useState('')
@@ -33,7 +32,7 @@ const CategoryEvents = (props) => {
         </button>
       </div>
       <div className="flex flex-wrap">
-      { events && Object.keys(events).map(x => <div key={x} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event todayEvents={props.todayEvents} isCategory={true} hideIsToday={false} now={now} uid={uid} eventKey={x} phoneNumber={phoneNumber} /></div>)}
+      { events && Object.keys(events).map(x => <div key={x} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event todayEvents={props.todayEvents} isCategory={true} hideIsToday={false} today={today} uid={uid} eventKey={x} phoneNumber={phoneNumber} /></div>)}
       </div>
     </div>
     : 

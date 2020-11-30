@@ -5,17 +5,18 @@ import dynamic from 'next/dynamic'
 const TodayEvent = dynamic(() => import('./TodayEvent'))
 
 const TodayEvents = (props) => {
-  const {uid, now, todayUserEvent} = props
-  const [events, setEvents] = useState(todayUserEvent)
+  const {uid, today, todayUserEvents} = props
+  const [events, setEvents] = useState(todayUserEvents)
   
   useEffect(() => {
-    const ref = firebase.database().ref(`/eventsByUserByDay/${now}/${uid}`)
+    const ref = firebase.database().ref(`/eventsByUserByDay/${today}/${uid}`)
     const listener = ref.on('value', snapshot => {
       setEvents(snapshot.val())
       return null
     });
     return () => ref.off('value', listener)
   }, [uid])
+
   return (
     events && 
     <div className="w-full">
@@ -26,7 +27,7 @@ const TodayEvents = (props) => {
       </div>
       <div className="flex flex-wrap mt-2">
       { events && Object.keys(events).map(x => 
-        <TodayEvent now={now} key={x} eventKey={x} />
+        <TodayEvent today={today} key={x} eventKey={x} />
       )}
       </div>
     </div>
