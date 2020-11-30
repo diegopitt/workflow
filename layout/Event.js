@@ -32,34 +32,34 @@ const Event = (props) => {
     const ref5 = firebase.database().ref(`usersByEvent/${eventKey}`);
     const listener1 = ref1.on('value', snapshot => {
       setEventData(snapshot.val());
-      if (isYourEvent){
-        let copy = ''
+      if (isYourEvent || isFav){
+        let copy = []
         snapshot.child('dayofweek').forEach(day => {
           switch (day.key) {
             case '0':
-              copy += 'Domingo  '; 
+              copy.push('Domingo')
               break;
             case '1':
-              copy += 'Lunes  '; 
+              copy.push('Lunes')
               break;
             case '2':
-              copy += 'Martes  '; 
+              copy.push('Martes')
               break;
             case '3':
-              copy += 'Miercoles  '; 
+              copy.push('Miercoles')
               break;
             case '4':
-              copy += 'Jueves  '; 
+              copy.push('Jueves')
               break;
             case '5':
-              copy += 'Viernes  '; 
+              copy.push('Viernes')
               break;
             case '6':
-              copy += 'Sabado  '; 
+              copy.push('Sabado')
               break;
           }
         });
-        setWeekCopy(copy)
+        setWeekCopy([copy.slice(0, -1).join(', '), copy.slice(-1)[0]].join(copy.length < 2 ? '' : ' y '))
       }
     });
     const listener2 = ref2.on('value', snapshot => {
@@ -88,9 +88,11 @@ const Event = (props) => {
         </div>}
       <img className="w-full rounded-md" src={eventData.img} alt={eventData.title} />
       <div className="px-2 py-4 bg-white">
-        <span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(todayEvents.hasOwnProperty(eventKey) && (!hideIsToday)) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}
-        {isYourEvent && <div className="font-medium text-xs mb-2 mt-2 text-gray-500">{weekCopy}</div>}
-        <div className="font-medium text-xs mb-2 mt-2 text-gray-500">De {eventData.start} a {eventData.end}</div>
+        <div><span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(todayEvents.hasOwnProperty(eventKey) && (!hideIsToday)) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}</div>
+        <div className="font-medium text-xs mb-2 mt-2 text-gray-500">
+          {(isYourEvent || isFav) && <span className="">{weekCopy + ' '}</span>}
+          <span className={`${(!isYourEvent && !isFav) && 'capitalize'}`}>de {eventData.start} a {eventData.end}</span>
+        </div>
         <p className="text-gray-700 text-base">{eventData.desc}</p>
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">{participants} {participants === 1 ? 'Participante' : 'Participantes'}</div>
       </div>
