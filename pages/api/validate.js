@@ -3,7 +3,6 @@ import moment from 'moment-timezone'
 
 const validate = async (uid) => {
   const today = moment().tz("America/Mexico_City").day();
-  const test = moment().tz("America/Mexico_City").day();
   if(uid){
     const user = await admin.auth().getUser(uid)
     const snap = await admin.database().ref(`/eventsByUser/${uid}`).once('value');
@@ -18,7 +17,6 @@ const validate = async (uid) => {
       data: {
         uid: uid,
         today: today,
-        test:test,
         phoneNumber: user ? user.phoneNumber : null,
         emailVerified: user ? user.emailVerified : null,
         todayEvents: events,
@@ -35,7 +33,6 @@ const validate = async (uid) => {
     const result = {
       data: {
         todayEvents: events,
-        test:test,
         today: today
       },
     };

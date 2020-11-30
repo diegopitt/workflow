@@ -14,6 +14,7 @@ const Events = (props) => {
   for (let i = 0; i <= 6; i++) {
     days.push(moment(moment().startOf('week').format()).add(i, 'days').format());
   };
+
   useEffect(() => {
     const ref = firebase.database().ref(`active/${day}`)
     const listener = ref.on('value', snapshot => {
@@ -30,7 +31,7 @@ const Events = (props) => {
           <div className="inline-flex border border-gray-300 rounded-full">
           {days.map((value, index) => (
             <button key={index} onClick={(e) => {changeDay(moment(value).day())}} className={`${moment(value).day() === today ? 'bg-gray-300 ' : 'bg-gray-100 '} ${moment(value).day() !== today && 'focus:bg-teal-400 focus:text-white '} text-gray-900 focus:outline-none ${(moment(value).day() === today) ? 'hover:bg-gray-300' : 'hover:bg-gray-200'} text-white font-light py-2 sm:py-2 md:py-3 px-4 sm:px-4 md:px-9 ${(index === 0) && 'rounded-l-full'} ${(index === 6) && 'rounded-r-full'}`}>
-              <div className="capitalize text-xs sm:text-xs md:text-sm font-medium md:font-semibold">{weekDays[index]}</div>
+              <div className="text-xs sm:text-xs md:text-sm font-medium md:font-semibold">{weekDays[index]}</div>
               <div className="text-xs">{moment(value).format('DD')}</div>
             </button>
           ))}

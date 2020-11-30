@@ -6,11 +6,10 @@ import dynamic from 'next/dynamic'
 
 const Event = (props) => {
   const { saveFavorite, unFavorite, registerEvent, unRegisterEvent } = useUser()
-  const { eventKey, uid, phoneNumber, isFav, now, hideIsToday, showDays, isCategory, todayEvents } = props
+  const { eventKey, uid, phoneNumber, isFav, hideIsToday, showDays, isCategory, todayEvents } = props
   const [eventData, setEventData] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [hasRegistered, setHasRegistered] = useState(null)
-  const [isToday, setIsToday] = useState({})
   const [isFavorite, setIsFavorite] = useState(null)
   const [participants, setParticipants] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +29,6 @@ const Event = (props) => {
     const ref1 = firebase.database().ref(`events/${eventKey}`);
     const ref2 = firebase.database().ref(`eventsByUser/${uid}/${eventKey}`);
     const ref3 = firebase.database().ref(`favotitesByUser/${uid}/${eventKey}`);
-    const ref4 = firebase.database().ref(`eventsByUserByDay/${now}/${uid}`);
     const ref5 = firebase.database().ref(`usersByEvent/${eventKey}`);
     const listener1 = ref1.on('value', snapshot => {
       setEventData(snapshot.val());
@@ -41,9 +39,6 @@ const Event = (props) => {
     const listener3 = ref3.on('value', snapshot => {
       setIsFavorite(snapshot.val());
     });
-    const listener4 = ref4.on('value', snapshot => {
-      setIsToday(snapshot.val() || {});
-    });
     const listener5 = ref5.on('value', snapshot => {
       setParticipants(snapshot.numChildren());
     });
@@ -51,7 +46,6 @@ const Event = (props) => {
       ref1.off('value', listener1)
       ref2.off('value', listener2)
       ref3.off('value', listener3)
-      ref4.off('value', listener4)
       ref5.off('value', listener5)
     };
   }, [eventKey]);

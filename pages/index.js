@@ -6,13 +6,13 @@ const Events = dynamic(() => import('../layout/Events'))
 const TodayEvents = dynamic(() => import('../layout/TodayEvents'))
 
 const Index = (props) => {
-  const [showModal, setShowModal] = useState(false)
   const {today} = props
-  console.log('time', props.test)
+  const [showModal, setShowModal] = useState(false)
   const Modal = dynamic(() => import('../layout/Modal'))
   const Register = dynamic(() => import('../layout/Register'))
   const CategoryEvents = dynamic(() => import('../layout/CategoryEvents'))
   const toggleModal = () => setShowModal(!showModal)
+  
   return (
     <Layout {...props} toggleModal={toggleModal}>
       {(!props.uid) && 

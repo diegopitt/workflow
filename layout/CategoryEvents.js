@@ -9,6 +9,12 @@ const CategoryEvents = (props) => {
   const [catID, setCatID] = useState(CategoryId)
   const [catTitle, setCatTitle] = useState('')
   const Event = dynamic(() => import('./Event'))
+
+  const changeCat = (cat, title) => {
+    setCatID(cat)
+    setCatTitle(title)
+  }
+  
   useEffect(() => {
     const ref = firebase.database().ref(`/categoryIndex/${catID}`)
     const listener = ref.on('value', snapshot => {
@@ -18,10 +24,7 @@ const CategoryEvents = (props) => {
     });
     return () => ref.off('value', listener)
   }, [catID])
-  const changeCat = (cat, title) => {
-    setCatID(cat)
-    setCatTitle(title)
-  }
+
   return (
     catID ? 
     <div className="w-full bg-gradient-to-r from-teal-400 to-blue-500">

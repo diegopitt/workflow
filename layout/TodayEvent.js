@@ -8,7 +8,6 @@ const TodayEvent = (props) => {
   const [timeLeft, setTimeLeft] = useState(null)
   const [passed, setPassed] = useState(false)
   const [isNow, setIsNow] = useState(false)
-
   const dayName = () => {
     return moment().locale('es').day(today).format("dddd")
   }
@@ -26,11 +25,11 @@ const TodayEvent = (props) => {
       if (!event) return
       if (moment().isAfter(moment(event.start, 'HH:mm')) && moment().isBefore(moment(event.end, 'HH:mm'))){
         setIsNow(true)
-        return
+        return null
       }
       if (moment().isAfter(moment(event.end, 'HH:mm'))){
         setPassed(true)
-        return
+        return null
       }
       const tL = moment().locale('es').to(moment(event.start, 'HH:mm'))
       setTimeLeft(tL)
