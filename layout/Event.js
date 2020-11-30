@@ -6,17 +6,17 @@ import dynamic from 'next/dynamic'
 
 const Event = (props) => {
   const { saveFavorite, unFavorite, registerEvent, unRegisterEvent } = useUser()
-  const { eventKey, uid, phoneNumber, isFav, hideIsToday, showDays, isCategory, todayEvents } = props
+  const { eventKey, uid, phoneNumber, isFav, hideIsToday, isCategory, todayEvents, isYourEvent } = props
   const [eventData, setEventData] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [hasRegistered, setHasRegistered] = useState(null)
   const [isFavorite, setIsFavorite] = useState(null)
+  const [weekCopy, setWeekCopy] = useState(null)
   const [participants, setParticipants] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const Modal = dynamic(() => import('./Modal'))
   const Register = dynamic(() => import('./Register'))
   const toggleModal = () => setShowModal(!showModal)
-
   const register = (uid, eventKey, start, title, phoneNumber) => {
     registerEvent(uid, eventKey, start, title, phoneNumber)
     setIsOpen(false)
@@ -32,6 +32,35 @@ const Event = (props) => {
     const ref5 = firebase.database().ref(`usersByEvent/${eventKey}`);
     const listener1 = ref1.on('value', snapshot => {
       setEventData(snapshot.val());
+      if (isYourEvent){
+        let copy = ''
+        snapshot.child('dayofweek').forEach(day => {
+          switch (day.key) {
+            case '0':
+              copy += 'Domingo  '; 
+              break;
+            case '1':
+              copy += 'Lunes  '; 
+              break;
+            case '2':
+              copy += 'Martes  '; 
+              break;
+            case '3':
+              copy += 'Miercoles  '; 
+              break;
+            case '4':
+              copy += 'Jueves  '; 
+              break;
+            case '5':
+              copy += 'Viernes  '; 
+              break;
+            case '6':
+              copy += 'Sabado  '; 
+              break;
+          }
+        });
+        setWeekCopy(copy)
+      }
     });
     const listener2 = ref2.on('value', snapshot => {
       setHasRegistered(snapshot.val());
@@ -60,7 +89,7 @@ const Event = (props) => {
       <img className="w-full rounded-md" src={eventData.img} alt={eventData.title} />
       <div className="px-2 py-4 bg-white">
         <span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(todayEvents.hasOwnProperty(eventKey) && (!hideIsToday)) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}
-        {showDays && <div className="font-medium text-xs mb-2 mt-2 text-gray-500">Lunes - Miercoles - Viernes</div>}
+        {isYourEvent && <div className="font-medium text-xs mb-2 mt-2 text-gray-500">{weekCopy}</div>}
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">De {eventData.start} a {eventData.end}</div>
         <p className="text-gray-700 text-base">{eventData.desc}</p>
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">{participants} {participants === 1 ? 'Participante' : 'Participantes'}</div>
