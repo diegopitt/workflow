@@ -20,7 +20,7 @@ const validate = async (uid) => {
         phoneNumber: user ? user.phoneNumber : null,
         emailVerified: user ? user.emailVerified : null,
         todayEvents: events,
-        todayUserEvents: eventByUserByday,
+        todayUserEvents: eventByUserByday ? eventByUserByday : null,
         eventsbyuser: eventsuser,
         favoritesbyuser: favoritesbyuser
       },

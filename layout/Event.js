@@ -5,13 +5,14 @@ import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 
 const Event = (props) => {
-  const { saveFavorite, unFavorite, registerEvent, unRegisterEvent } = useUser()
-  const { data, uid, phoneNumber, isFav, hideIsToday, isCategory, todayEvents, isYourEvent } = props
+  const { saveFavorite, unFavorite, registerEvent, unRegisterEvent, eventWeekDays } = useUser()
+  const { data, uid, phoneNumber, isFav, hideIsToday, isCategory, todayEvents, isYourEvent, today } = props
   const [eventData, setEventData] = useState(data)
   const [showModal, setShowModal] = useState(false)
   const [hasRegistered, setHasRegistered] = useState(null)
   const [isFavorite, setIsFavorite] = useState(null)
-  const [weekCopy, setWeekCopy] = useState(null)
+  const [weekCopy, setWeekCopy] = useState(eventWeekDays(data.dayofweek))
+  const [todayUserEvents, setTodayUserEvents] = useState(Object.keys(todayEvents))
   const [participants, setParticipants] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const Modal = dynamic(() => import('./Modal'))
@@ -26,41 +27,15 @@ const Event = (props) => {
     setIsOpen(false)
   }
   useEffect(() => {
-    console.log(eventData.key)
-    const ref1 = firebase.database().ref(`events/${eventData.key}`);
-    const ref2 = firebase.database().ref(`eventsByUser/${uid}/${eventData.key}`);
-    const ref3 = firebase.database().ref(`favotitesByUser/${uid}/${eventData.key}`);
-    const ref5 = firebase.database().ref(`usersByEvent/${eventData.key}`);
+    const ref1 = firebase.database().ref(`events/${data.key}`);
+    const ref2 = firebase.database().ref(`eventsByUser/${uid}/${data.key}`);
+    const ref3 = firebase.database().ref(`favotitesByUser/${uid}/${data.key}/key`);//fix this?
+    const ref4 = firebase.database().ref(`/eventsByUserByDay/${today}/${uid}`);
+    const ref5 = firebase.database().ref(`usersByEvent/${data.key}`);
     const listener1 = ref1.on('value', snapshot => {
       setEventData(snapshot.val());
       if (isYourEvent || isFav || isCategory){
-        let copy = []
-        snapshot.child('dayofweek').forEach(day => {
-          switch (day.key) {
-            case '0':
-              copy.push('Domingo')
-              break;
-            case '1':
-              copy.push('Lunes')
-              break;
-            case '2':
-              copy.push('Martes')
-              break;
-            case '3':
-              copy.push('Miercoles')
-              break;
-            case '4':
-              copy.push('Jueves')
-              break;
-            case '5':
-              copy.push('Viernes')
-              break;
-            case '6':
-              copy.push('Sabado')
-              break;
-          }
-        });
-        setWeekCopy([copy.slice(0, -1).join(', '), copy.slice(-1)[0]].join(copy.length < 2 ? '' : ' y '))
+        setWeekCopy(eventWeekDays(snapshot.child('dayofweek').val()))
       }
     });
     const listener2 = ref2.on('value', snapshot => {
@@ -69,6 +44,9 @@ const Event = (props) => {
     const listener3 = ref3.on('value', snapshot => {
       setIsFavorite(snapshot.val());
     });
+    const listener4 = ref4.on('value', snapshot => {
+      snapshot.val() && setTodayUserEvents(Object.keys(snapshot.val()))
+    });
     const listener5 = ref5.on('value', snapshot => {
       setParticipants(snapshot.numChildren());
     });
@@ -76,9 +54,10 @@ const Event = (props) => {
       ref1.off('value', listener1)
       ref2.off('value', listener2)
       ref3.off('value', listener3)
+      ref4.off('value', listener4)
       ref5.off('value', listener5)
     };
-  }, [eventData.key]);
+  }, [data.key]);
 
   return (
     eventData &&
@@ -89,7 +68,7 @@ const Event = (props) => {
         </div>}
       <img className="w-full rounded-md" src={eventData.img} alt={eventData.title} />
       <div className="px-2 py-4 bg-white">
-        <div><span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span></div>
+        <div><span className="font-bold text-xl mb-2 mr-1">{eventData.title}</span>{(todayUserEvents.includes(eventData.key) && (!hideIsToday)) && <span className="inline-block bg-green-500 text-white ml-1 rounded-full px-2 py-0 text-xs font-semibold mr-2 mb-2">Hoy</span>}</div>
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">
           {(isYourEvent || isFav || isCategory) && <span className="">{weekCopy + ' '}</span>}
           <span className={`${(!isYourEvent && !isFav && !isCategory) && 'capitalize'}`}>de {eventData.start} a {eventData.end}</span>

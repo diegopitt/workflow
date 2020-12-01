@@ -4,10 +4,9 @@ import dynamic from 'next/dynamic'
 
 const YourEvents = (props) => {
   const {uid, eventsbyuser, todayEvents, today} = props
-  console.log('eventsbyuser', eventsbyuser)
   const [allEvents, setEvents] = useState(eventsbyuser)
   const Event = dynamic(() => import('./Event'))
-
+console.log('here')
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUser/${uid}`)
     const listener = ref.on('value', snapshot => {

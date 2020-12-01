@@ -11,7 +11,6 @@ const TodayEvents = (props) => {
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUserByDay/${today}/${uid}`)
     const listener = ref.on('value', snapshot => {
-      console.log(snapshot.val())
       setEvents(snapshot.val())
       return null
     });

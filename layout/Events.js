@@ -39,7 +39,7 @@ const Events = (props) => {
         </div>
       </div>
       <div className="flex flex-wrap min-h-screen">
-      { allEvents && Object.values(allEvents).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} hideIsToday={false} today={today} uid={uid} phoneNumber={phoneNumber} /></div>)}
+      { allEvents && Object.values(allEvents).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} todayEvents={todayEvents} hideIsToday={false} today={today} uid={uid} phoneNumber={phoneNumber} /></div>)}
       { !allEvents && <div className="flex justify-center w-full mt-10 text-lg font-semibold text-gray-400">No hay eventos para esta fecha</div>}
       </div>
     </div>
