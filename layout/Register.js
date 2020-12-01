@@ -5,7 +5,7 @@ import { useUser } from '../lib/userContext'
 const Register = (props) => {
   const { registerEvent} = useUser()
   const router = useRouter()
-  const {toggleModal, eventKey, dayOfWeek, start, title} = props
+  const {toggleModal, saveData, event} = props
   const [enterCode, setEnterCode] = useState(false)
   const [confirmationResult, setconfirmationResult] = useState(false)
   const [signingIn, setsigningIn] = useState()
@@ -30,8 +30,8 @@ const Register = (props) => {
     if (verificationCode) {
       setVerifyingCode(true);
       confirmationResult.confirm(verificationCode).then( async (result) => {
-        if(eventKey && start){
-          await registerEvent(result.user.uid, eventKey, start, title, result.user.phoneNumber)
+        if(saveData){
+          await registerEvent(result.user.uid, event.key, event, result.user.phoneNumber)
         }
         toggleModal(false)
         router.push('/?logged')

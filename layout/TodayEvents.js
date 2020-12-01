@@ -11,6 +11,7 @@ const TodayEvents = (props) => {
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUserByDay/${today}/${uid}`)
     const listener = ref.on('value', snapshot => {
+      console.log(snapshot.val())
       setEvents(snapshot.val())
       return null
     });
@@ -26,8 +27,8 @@ const TodayEvents = (props) => {
         </h3>
       </div>
       <div className="flex flex-wrap mt-2">
-      { events && Object.keys(events).map(x => 
-        <TodayEvent today={today} key={x} eventKey={x} />
+      { events && Object.values(events).map(x => 
+        <TodayEvent today={today} key={x.key} data={x} />
       )}
       </div>
     </div>

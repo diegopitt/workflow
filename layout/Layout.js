@@ -22,8 +22,8 @@ const Layout = (props) => {
               <div className="block">
                 { props.uid &&
                   <div className="ml-3 flex items-baseline">
-                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-indigo-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
-                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-indigo-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
+                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-blue-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
+                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-blue-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
                   </div>
                 }
               </div>

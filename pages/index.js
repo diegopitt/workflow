@@ -24,14 +24,14 @@ const Index = (props) => {
       {(props.uid && props.todayUserEvents) && <TodayEvents todayUserEvents={props.todayUserEvents} uid={props.uid} today={today} />}
         <div>
           <div className="px-4 py-10 sm:px-6 pb-2">
-            <h3 className="text-xl leading-6 font-bold text-gray-800 mt-0 sm:mt-0 md:mt-1">
+            <h3 className="text-xl leading-6 font-bold text-gray-700 mt-0 sm:mt-0 md:mt-1">
               Calendario de eventos
             </h3>
           </div>
           <Events uid={props.uid} today={today} todayEvents={props.todayEvents} phoneNumber={props.phoneNumber} />
         </div>
         <Modal showModal={showModal}>
-          <Register toggleModal={toggleModal}/>
+          <Register saveData={false} toggleModal={toggleModal}/>
         </Modal>
     </Layout>
   )

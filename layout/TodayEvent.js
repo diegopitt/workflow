@@ -3,8 +3,8 @@ import {firebase} from '../lib/firebase-client'
 import moment from 'moment-timezone'
 
 const TodayEvent = (props) => {
-  const {eventKey, today} = props
-  const [event, setEvent] = useState(null)
+  const {data, today} = props
+  const [event, setEvent] = useState(data)
   const [timeLeft, setTimeLeft] = useState(null)
   const [passed, setPassed] = useState(false)
   const [isNow, setIsNow] = useState(false)
@@ -12,13 +12,13 @@ const TodayEvent = (props) => {
     return moment().locale('es').day(today).format("dddd")
   }
   useEffect(() => {
-    const ref = firebase.database().ref(`/events/${eventKey}`)
+    const ref = firebase.database().ref(`/events/${event.key}`)
     const listener = ref.on('value', snapshot => {
       setEvent(snapshot.val());
       return null
     });
     return () => ref.off('value', listener)
-  }, [eventKey])
+  }, [event.key])
 
   useEffect(() => {
     let interval = setInterval(() => {
