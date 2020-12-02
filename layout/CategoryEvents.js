@@ -35,7 +35,7 @@ const CategoryEvents = (props) => {
         </button>
       </div>
       <div className="flex flex-wrap">
-      { events && Object.values(events).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} isCategory={true} hideIsToday={false} today={today} uid={uid} phoneNumber={phoneNumber} /></div>)}
+      { events && Object.values(events).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} todayEvents={{}} isCategory={true} catTitle={catTitle} hideIsToday={false} today={today} uid={uid} phoneNumber={phoneNumber} /></div>)}
       </div>
     </div>
     : 

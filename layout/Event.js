@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic'
 
 const Event = (props) => {
   const { saveFavorite, unFavorite, registerEvent, unRegisterEvent, eventWeekDays } = useUser()
-  const { data, uid, phoneNumber, isFav, hideIsToday, isCategory, todayEvents, isYourEvent, today } = props
+  const { data, uid, phoneNumber, isFav, hideIsToday, isCategory, todayEvents, isYourEvent, today, catTitle } = props
   const [eventData, setEventData] = useState(data)
   const [showModal, setShowModal] = useState(false)
   const [hasRegistered, setHasRegistered] = useState(null)
@@ -77,9 +77,9 @@ const Event = (props) => {
         <div className="font-medium text-xs mb-2 mt-2 text-gray-500">{participants} {participants === 1 ? 'Participante' : 'Participantes'}</div>
       </div>
       <div className="px-2 pb-2 relative bg-white">
-        {isCategory && <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-xs font-semibold text-gray-500 mr-2">#Yoga</span>}
         {!hasRegistered && <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none outline-none bg-teal-400 text-white text-xs font-medium py-1 px-3 rounded-full">Recordarme</button>}
         {hasRegistered && <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none outline-none bg-green-500 text-xs text-white py-1 px-3 rounded-full">Confirmado</button>}
+        {isCategory && <span className="inline-block bg-gray-300 rounded-full px-3 py-1 text-xs font-semibold text-gray-500 ml-2 lowercase">#{catTitle}</span>}
         <Transition show={isOpen} enter="transition ease-out duration-100" enterFrom="transform opacity-0 scale-95" enterTo="transform opacity-100 scale-100" leave="transition ease-in duration-75" laveFrom="transform opacity-100 scale-100" leaveTo="transform opacity-0 scale-95">
           {(ref) => (
             <div ref={ref} className={`${hasRegistered ? 'bg-white' : 'bg-white'} absolute -mt-19 left-0 mt-2 rounded-md shadow-lg`}>

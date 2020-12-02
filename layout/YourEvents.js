@@ -4,9 +4,8 @@ import dynamic from 'next/dynamic'
 
 const YourEvents = (props) => {
   const {uid, eventsbyuser, todayEvents, today} = props
-  const [allEvents, setEvents] = useState(eventsbyuser)
+  const [events, setEvents] = useState(eventsbyuser)
   const Event = dynamic(() => import('./Event'))
-console.log('here')
   useEffect(() => {
     const ref = firebase.database().ref(`/eventsByUser/${uid}`)
     const listener = ref.on('value', snapshot => {
@@ -27,8 +26,8 @@ console.log('here')
         </p>
       </div>
       <div className="flex flex-wrap min-h-screen">
-      { allEvents && Object.values(allEvents).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} isYourEvent={true} todayEvents={todayEvents} hideIsToday={false} today={today} uid={uid} /></div>)}
-      { !allEvents && <div className="flex justify-center w-full mt-10 text-lg font-semibold text-gray-400">No participas en ningun evento</div>}
+      { events && Object.values(events).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} isYourEvent={true} todayEvents={todayEvents} hideIsToday={false} today={today} uid={uid} /></div>)}
+      { !events && <div className="flex justify-center w-full mt-10 text-lg font-semibold text-gray-400">No participas en ningun evento</div>}
       </div>
     </div>
   )
