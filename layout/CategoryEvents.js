@@ -41,9 +41,9 @@ const CategoryEvents = (props) => {
     : 
     <div className="bg-gradient-to-r from-teal-400 to-blue-500">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-16 md:flex md:items-center md:justify-between">
-        <h2 className="text-3xl text-gray-900 sm:text-4xl">
-          <span className="block font-extrabold text-indigo-700">EVENTOS</span>
-          <span className="block font-bold text-gray-300">TODOS LOS DIAS</span>
+        <h2>
+          <span className="block font-extrabold text-indigo-700 text-4xl sm:text-5xl">EVENTOS</span>
+          <span className="block font-bold text-gray-300 text-2xl sm:text-3xl">TODOS LOS DIAS</span>
         </h2>
         <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
           <div className="inline-flex">
