@@ -28,11 +28,12 @@ const Events = (props) => {
     <div className="w-full">
       <div className="flex items-center justify-center py-6 md:py-8 px-4 sm:px-6 lg:px-8">
         <div>
-          <div className="inline-flex border border-gray-300 rounded-full">
+          <div className="inline-flex border border-gray-300 rounded-full relative">
           {days.map((value, index) => (
-            <button key={index} onClick={(e) => {e.preventDefault(); changeDay(moment(value).day())}} className={`${moment(value).day() === today ? 'bg-teal-400  text-white ' : 'bg-gray-100 '} ${moment(value).day() !== today && 'focus:bg-gray-300 focus:text-gray-900 '}  focus:outline-none ${(moment(value).day() === today) ? 'hover:bg-teal-400' : 'hover:bg-gray-200'} font-light py-2 sm:py-2 md:py-3 px-4 sm:px-4 md:px-9 ${(index === 0) && 'rounded-l-full'} ${(index === 6) && 'rounded-r-full'}`}>
-              <div className="text-xs sm:text-xs md:text-sm font-medium md:font-semibold">{weekDays[index]}</div>
-              <div className="text-xs">{moment(value).format('DD')}</div>
+            <button key={index} onClick={(e) => {e.preventDefault(); changeDay(moment(value).day())}} className={`${moment(value).day() === today ? 'bg-teal-400  text-white ' : 'bg-gray-100 '}  focus:outline-none ${(moment(value).day() === today) ? 'hover:bg-teal-400' : 'hover:bg-gray-200'} font-light py-2 sm:py-2 md:py-3 px-4 sm:px-4 md:px-9 ${(index === 0) && 'rounded-l-full'} ${(index === 6) && 'rounded-r-full'}`}>
+              {(moment(value).day() === day && (moment(value).day() !== today )) && <span className="animate-pulse absolute inline-flex h-1 w-1 sm:h-1 sm:w-1 md:h-1.5 md:w-1.5 rounded-full bg-teal-400 opacity-100 top-1"></span>}
+              <span className="block text-xs sm:text-xs md:text-sm font-medium md:font-semibold">{weekDays[index]}</span>
+              <span className={`${moment(value).day() === today ? 'font-semibold text-md' : 'text-xs '}`}>{moment(value).format('DD')}</span>
             </button>
           ))}
           </div>
