@@ -12,7 +12,7 @@ const Layout = (props) => {
 
   return(
     <div>
-      <nav className="bg-black">
+      <nav className="bg-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -95,7 +95,7 @@ const Layout = (props) => {
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5 space-x-3">
                 <div className="flex-shrink-0">
-                  <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <svg className="h-10 w-10 rounded-full" fill="#d2d6dc" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" /></svg>
                 </div>
                 <div className="space-y-1">
                   <div className="text-base font-medium leading-none text-white">Usuario</div>

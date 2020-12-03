@@ -3,7 +3,8 @@ import {firebase} from '../lib/firebase-client'
 import dynamic from 'next/dynamic'
 
 const Favorites = (props) => {
-  const {uid, favoritesbyuser, todayEvents, today} = props
+  const {uid, favoritesbyuser, todayEvents, today, phoneNumber} = props
+  console.log(phoneNumber)
   const [allEvents, setAllEvents] = useState(favoritesbyuser)
   const Event = dynamic(() => import('./Event'))
 
@@ -27,7 +28,7 @@ const Favorites = (props) => {
         </p> */}
       </div>
       <div className="flex flex-wrap min-h-screen">
-      { allEvents && Object.values(allEvents).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} todayEvents={todayEvents} isFav={true} today={today} uid={uid} eventKey={x} /></div>)}
+      { allEvents && Object.values(allEvents).map(x => <div key={x.key} className="w-full sm:w-1/2 md:w-1/3 mb-4"><Event data={x} todayEvents={todayEvents} isFav={true} today={today} uid={uid} eventKey={x} phoneNumber={phoneNumber} /></div>)}
       { !allEvents && <div className="flex justify-center w-full mt-10 text-lg font-semibold text-gray-400">No tienes ningun evento favorito</div>}
       </div>
     </div>

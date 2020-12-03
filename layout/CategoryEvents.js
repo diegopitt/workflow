@@ -52,7 +52,7 @@ const CategoryEvents = (props) => {
                 <span className="px-2">YOGA</span>
                 <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </button>
-              <button onClick={() => {changeCat(null, 'TAI CHI')}} type="button" className={`bg-white inline-flex font-normal justify-center border border-gray-300 text-gray-400 focus:outline-none hover:bg-gray-200 text-white font-light py-2 px-2 rounded-full mb-2`}>
+              <button onClick={() => {changeCat(1003, 'TAI CHI')}} type="button" className={`bg-white inline-flex font-normal justify-center border border-gray-300 text-gray-400 focus:outline-none hover:bg-gray-200 text-white font-light py-2 px-2 rounded-full mb-2`}>
                 <span className="px-2">TAI CHI</span>
                 <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </button>

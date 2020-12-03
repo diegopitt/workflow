@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans : ['Open Sans']
+        sans : ['Quicksand']
       },
       margin: {
         '-19': '-4.9rem',

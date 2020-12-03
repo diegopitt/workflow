@@ -2,23 +2,33 @@ import { useState, useEffect } from 'react'
 import {firebase} from '../lib/firebase-client'
 import { useRouter } from 'next/router'
 import { useUser } from '../lib/userContext'
+
 const Register = (props) => {
   const { registerEvent} = useUser()
   const router = useRouter()
   const {toggleModal, saveData, event} = props
   const [enterCode, setEnterCode] = useState(false)
+  const [recaptchaVerifier, setRecaptchaVerifier] = useState(null)
   const [confirmationResult, setconfirmationResult] = useState(false)
-  const [signingIn, setsigningIn] = useState()
-  const [continueEnabled, setContinueEnabled] = useState(true)
+  const [phone, setPhone] = useState('')
+  const [signingIn, setsigningIn] = useState(false)
+  const [continueEnabled, setContinueEnabled] = useState(false) //check if valid phone
   const [verifyingCode, setVerifyingCode] = useState()
   const [verificationCode, setVerificationCode] = useState('')
 
+  const closeModal = () => {
+    recaptchaVerifier.clear()
+    toggleModal(false)
+  }
 	const onSignInSubmit = () => {
     setsigningIn(true);
-		const appVerifier = window.recaptchaVerifier;
-		firebase.auth().signInWithPhoneNumber('+52' + phone(), appVerifier)
+    const error = validateInput(phone);
+    console.log(error)
+    if (error) return
+		firebase.auth().signInWithPhoneNumber('+52' + phone, recaptchaVerifier)
 		.then(function (confirmationResult) {
-			setconfirmationResult(confirmationResult)
+      setconfirmationResult(confirmationResult)
+      setsigningIn(false);
 			setEnterCode(true)
 		}).catch(function (error) {
 			console.error('Error during signInWithPhoneNumber:\n\n' + error.code + '\n\n' + error.message);
@@ -42,35 +52,38 @@ const Register = (props) => {
       });
     }
   }
-  const isPhoneNumberValid = () =>{
-    var pattern = /^\+[0-9\s\-\(\)]+$/;
-    var phoneNumber = '+52' + window.phone;
-    return phoneNumber.search(pattern) !== -1;
-  }
-	const handleChange = e => {
-		const { value, name } = e.target;
-		if (name === 'phone-number'){
-      window.phone = value
-		}
+  const validateInput = value => {
+    let error = false
+    if (value.length !== 14) error = true;
+    return error;
+  };
+  const normalizeInput = (value, previousValue) => {
+    if (!value) return value;
+    const currentValue = value.replace(/[^\d]/g, '');
+    const cvLength = currentValue.length;
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 4) return currentValue;
+      if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+      return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+    }
+  };
+  const handleChange =(e) => {
+    const { value, name } = e.target;
+    if (name === 'phone-number'){
+      setPhone(normalizeInput(value, phone))
+      if (value.length === 14)(
+        setContinueEnabled(true)
+      )
+    }
 		if (name === 'verificationCode'){
 			setVerificationCode(value)
 		}
-	}
-	const phone = () =>{
-		return window.phone
-	}
+  };
+
   useEffect(() => {
 		let isMounted = true
 		if(isMounted){
-			window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('continue-btn', {
-				'size': 'invisible',
-				'callback': function(response) {
-					onSignInSubmit();
-				}
-			});
-			recaptchaVerifier.render().then(function(widgetId) {
-				window.recaptchaWidgetId = widgetId;
-			});
+			setRecaptchaVerifier(new firebase.auth.RecaptchaVerifier('continue-btn', {'size': 'invisible'	}));
 		}
     return () => { isMounted = false };
   }, []);
@@ -93,7 +106,7 @@ const Register = (props) => {
 										<span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
 										<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
 										</span>
-										<input onChange={(e) => handleChange(e)} value={window.phone} id="phone-number" name="phone-number" className="outline-none form-input flex-1 block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+										<input type="text" name="phone-number" placeholder="(xxx) xxx-xxxx" value={phone} onChange={(e) => handleChange(e)} className="outline-none form-input flex-1 block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
 									</div>
 								</div>
 								<div className={`${!enterCode ? 'hidden' : 'block'} col-span-6 sm:col-span-6 lg:col-span-2`}>
@@ -112,7 +125,7 @@ const Register = (props) => {
 				<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
 					<span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
 						{!enterCode ?
-							<button data-badge="bottomleft" id="continue-btn" type="button" className={`${!continueEnabled && 'hidden'} inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-base leading-6 font-medium text-white shadow-sm  focus:outline-none sm:text-sm sm:leading-5`}>
+							<button onClick={() => onSignInSubmit()} disabled={!continueEnabled} data-badge="bottomleft" id="continue-btn" type="button" className={`${!continueEnabled ? 'bg-gray-300 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500'} inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm  focus:outline-none sm:text-sm sm:leading-5`}>
               {signingIn && <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -130,7 +143,7 @@ const Register = (props) => {
 						}
 					</span>
 					<span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-						<button onClick={() => toggleModal(false)} type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Cancelar</button>
+						<button onClick={() => closeModal()} type="button" className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">Cancelar</button>
 					</span>
 				</div>
 			</div>
