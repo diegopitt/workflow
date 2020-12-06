@@ -1,0 +1,23 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "events": {
+      ".read": "true",
+      ".write": "auth != null",
+      ".indexOn": ["status"]
+    },
+    "categoryIndex": {
+      ".read": "true",
+      ".write": "auth != null",
+    },
+    "active": {
+      ".read": "true",
+      ".write": "auth != null",
+    },
+    "projects": {
+      ".read": "true",
+      ".write": "auth != null",
+    }
+  }
+}

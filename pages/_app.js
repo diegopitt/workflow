@@ -1,5 +1,4 @@
-import React from 'react';
-import Head from 'next/head';
+import React, { useEffect } from 'react';
 import App from 'next/app'
 import cookies from 'next-cookies'
 import NProgress from 'nprogress'
@@ -15,13 +14,25 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 export default function MyApp(props) {
   const { Component, pageProps, data } = props;
-
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js').then(
+          function (registration) {
+            console.log(
+              'Service Worker registration successful with scope: ',
+              registration.scope
+            )
+          },
+          function (err) {
+            console.log('Service Worker registration failed: ', err)
+          }
+        )
+      })
+    }
+  }, [])
   return (
     <React.Fragment>
-      <Head>
-        <title>Wind Fire</title>
-        <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover' />
-      </Head>
       <UserProvider>
         <Component {...{...pageProps, ...data}} />
       </UserProvider>
@@ -35,9 +46,10 @@ MyApp.getInitialProps = async (userContext) => {
     try {
       const headers = {
         'Context-Type': 'application/json',
-        Authorization: JSON.stringify({ uid: uid }),
+        Authorization: JSON.stringify({ uid }),
       };
       const dev = process.env.NODE_ENV === 'development';
+      console.log('here')
       const server = dev ? 'http://localhost:3000/' : 'https://wind-fire.vercel.app/';
       const result = await fetch(`${server}/api/validate`, { headers }).then((res) => res.json());
       console.log('_app.js from validate', { ...result, ...appProps })

@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from '../layout/Layout'
 import dynamic from 'next/dynamic'
 const MainHero = dynamic(() => import('../layout/MainHero'))
 const Events = dynamic(() => import('../layout/Events'))
 const TodayEvents = dynamic(() => import('../layout/TodayEvents'))
+import { firebaseCloudMessaging } from '../lib/webPush'
 
 const Index = (props) => {
   const {today} = props
@@ -12,7 +13,11 @@ const Index = (props) => {
   const Register = dynamic(() => import('../layout/Register'))
   const CategoryEvents = dynamic(() => import('../layout/CategoryEvents'))
   const toggleModal = () => setShowModal(!showModal)
-  
+  useEffect(() => {
+    if(props.uid){
+      firebaseCloudMessaging.init(props.uid)
+    }
+  }, [props.uid])
   return (
     <Layout {...props} toggleModal={toggleModal}>
       {(!props.uid) && 

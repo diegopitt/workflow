@@ -7,3 +7,5 @@ functions
 database-debug.log
 ui-debug.log
 package-lock.json
+
+.vercel

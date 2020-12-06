@@ -12,7 +12,7 @@ const Layout = (props) => {
 
   return(
     <div>
-      <nav className="bg-gray-700">
+      <nav className="bg-gray-100 border-b border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -22,8 +22,8 @@ const Layout = (props) => {
               <div className="block">
                 { props.uid &&
                   <div className="ml-3 flex items-baseline">
-                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-blue-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
-                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-blue-400' : 'text-gray-400 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
+                    <p onClick={() => {router.pathname !== '/tus_eventos' && router.push('/tus_eventos')}} className={`${router.pathname === '/tus_eventos' ? 'text-gray-700' : 'text-gray-500 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Tus Eventos</p>
+                    <p onClick={() => {router.pathname !== '/favoritos'   && router.push('/favoritos')}}  className={`${router.pathname === '/favoritos' ? 'text-gray-700' : 'text-gray-500 '} cursor-pointer px-3 py-1 rounded-md text-sm font-semibold focus:outline-none`}>Favoritos</p>
                   </div>
                 }
               </div>
@@ -32,14 +32,14 @@ const Layout = (props) => {
               { props.uid && 
                 <div className="ml-4 flex items-center md:ml-6">
                   <button className="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-indigo-400 focus:outline-none focus:text-indigo-400 focus:bg-gray-700" aria-label="Notifications">
-                    <svg className="h-7 w-7" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <svg className="h-7 w-7" stroke="#6b7280" fill="none" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                   </button>
                   <div className="ml-3 relative">
                     <div>
                       <button onClick={() => setIsProfileOpen(!IsProfileOpen)}  className="max-w-xs flex hover:text-indigo-400 items-center text-sm rounded-full text-gray-400 focus:outline-none focus:text-indigo-400 " id="user-menu" aria-label="User menu" aria-haspopup="true">
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg className="w-8 h-8" fill="none" stroke="#6b7280" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                       </button>
                     </div>
                     <Transition show={IsProfileOpen} enter="transition ease-out duration-100" enterFrom="transform opacity-0 scale-95" enterTo="transform opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="transform opacity-100 scale-100" leaveTo="transform opacity-0 scale-95">
@@ -92,19 +92,19 @@ const Layout = (props) => {
         </div>
         { props.uid &&
           <div className={`${!IsMenuOn ? 'hidden' : 'block'} md:hidden` }>
-            <div className="pt-4 pb-3 border-t border-gray-700">
+            <div className="pt-4 pb-3 border-t border-gray-300">
               <div className="flex items-center px-5 space-x-3">
                 <div className="flex-shrink-0">
-                  <svg className="h-10 w-10 rounded-full" fill="#d2d6dc" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" /></svg>
+                  <svg className="h-10 w-10 rounded-full" fill="#6b7280" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" /></svg>
                 </div>
                 <div className="space-y-1">
-                  <div className="text-base font-medium leading-none text-white">Usuario</div>
-                  <div className="text-sm font-medium leading-none text-gray-400">Chiapas</div>
+                  <div className="text-base font-medium leading-none text-gray-700">Usuario</div>
+                  <div className="text-sm font-medium leading-none text-gray-500">Chiapas</div>
                 </div>
               </div>
               <div className="mt-3 px-2 space-y-1">
-                <p onClick={() => router.push('/profile')} href="#" className="cursor-pointer block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Preferencias</p>
-                <p href="#"  onClick={() => logOut()} className="cursor-pointer block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Salir</p>
+                <p onClick={() => router.push('/profile')} href="#" className="cursor-pointer block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Preferencias</p>
+                <p href="#"  onClick={() => logOut()} className="cursor-pointer block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">Salir</p>
               </div>
             </div>
           </div>
